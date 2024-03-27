@@ -5,6 +5,6 @@ session_start();
 $_SESSION = [];
 
 // Destroy all sessions
-header ('Location: index.php');
+header ('Location: login.php');
 exit;
 ?>

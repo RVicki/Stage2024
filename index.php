@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -32,6 +32,7 @@
         </div>
            
     </div>
-</div>
+</div> -->
 
-<?php include('footer.php'); ?>
+
+
