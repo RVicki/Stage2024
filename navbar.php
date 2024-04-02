@@ -10,7 +10,8 @@ $navLinks = array(
   "Courses" => "course",
   "Cursisten" => "student",
   "Docenten" => "teacher",
-  "Skills" => "skills"
+  "Skills" => "skills",
+  "Stageplaatsen" => "internship"
 );
 
 ?>

@@ -7,23 +7,24 @@
             </div>
         </div>
         <hr>
+       
         <div class="row m-2">
             <div class="col-md text-center">
-                <button class="bigbtn"><a href="admin.php" class="nav-link">Algemeen overzicht</a></button>
-            </div>
-        </div>
-        <div class="row m-2">
-            <div class="col-md text-center">
-                <button class="bigbtn"><a href="student.php" class="nav-link">Cursist</a></button>
+                <button class="bigbtn"><a href="student.php" class="nav-link">Cursisten</a></button>
             </div>
             <div class="col-md text-center">
-                <button class="bigbtn"><a href="course.php" class="nav-link">Course</a></button>
+                <button class="bigbtn"><a href="course.php" class="nav-link">Courses</a></button>
             </div>
             
         </div>
         <div class="row m-2">
             <div class="col-md text-center">
-                <button class="bigbtn"><a href="admin.php" class="nav-link">Docent</a></button>
+                <button class="bigbtn"><a href="admin.php" class="nav-link">Stageplaatsen</a></button>
+            </div>
+        </div>
+        <div class="row m-2">
+            <div class="col-md text-center">
+                <button class="bigbtn"><a href="admin.php" class="nav-link">Docenten</a></button>
             </div>
             <div class="col-md text-center">
                 <button class="bigbtn"><a href="skills.php" class="nav-link">Skills</a></button>
