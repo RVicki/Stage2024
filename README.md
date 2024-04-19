@@ -57,7 +57,7 @@ Stage2024 is a web-based internship management system designed to streamline the
 
 3. **Configure the database:**
    - Create a new MySQL database and import the provided SQL schema and test data.
-   - Configure the `db_config.php` file to set up the database connection.
+   - Configure the `db_connect.php` and `db_config.php` file to set up the database connection.
 
 4. **Install dependencies:**
    ```bash
