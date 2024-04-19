@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php include_once "../db_connect.php"; ?>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit form</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <?php include('../includes/bootstrap.php'); ?>
     <style>
         .top {
             position: fixed;
@@ -63,7 +63,7 @@
                 co.name AS company_name
             FROM
                 students s
-            LEFT JOIN internship_student ist ON s.id = ist.student_id 
+            LEFT JOIN internship_student ist ON s.id = ist.student_id
             LEFT JOIN student_course sc ON s.id = sc.student_id
             LEFT JOIN courses c ON sc.course_id = c.id
             LEFT JOIN course_teacher ct ON c.id = ct.course_id
@@ -116,7 +116,7 @@
                     $intSoft++;
                 }
             }
-            // print_r($responseGrades); 
+            // print_r($responseGrades);
         }
     }
     ?>
