@@ -40,7 +40,6 @@ if (isset($_SESSION['user_type'])) {
                     <th>Voornaam</th>
                     <th>Achternaam</th>
                     <th>Email</th>
-                    <th>Wachtwoord</th>
                     <th>Acties</th>
                 </tr>
             </thead>
@@ -71,10 +70,6 @@ if (isset($_SESSION['user_type'])) {
                         <div class="form-group">
                             <label for="edit-email">Email:</label>
                             <input type="email" class="form-control" id="edit-email">
-                        </div>
-                        <div class="form-group">
-                            <label for="edit-password">Wachtwoord:</label>
-                            <input type="password" class="form-control" id="edit-password">
                         </div>
                     </form>
                 </div>
@@ -149,12 +144,6 @@ if (isset($_SESSION['user_type'])) {
                         data: "email"
                     },
                     {
-                        data: "password",
-                        render: function(data, type, row) {
-                            return '<span class="password-text">********</span><button class="btn btn-link reveal-password" data-password="' + data + '">Reveal</button>';
-                        }
-                    },
-                    {
                         data: null,
                         render: function(data, type, row) {
                             return '<button class="btn btn-primary btn-sm edit-btn m-1"><i class="bi bi-pencil-square"></i></button>' +
@@ -172,7 +161,6 @@ if (isset($_SESSION['user_type'])) {
                     $('#edit-first-name').val(rowData.first_name);
                     $('#edit-last-name').val(rowData.last_name);
                     $('#edit-email').val(rowData.email);
-                    $('#edit-password').val(rowData.password);
                     $('#edit-teacher-modal').modal('show');
                 } else {
                     console.error("No data found for the row.");
@@ -185,7 +173,6 @@ if (isset($_SESSION['user_type'])) {
                 var firstName = $('#edit-first-name').val();
                 var lastName = $('#edit-last-name').val();
                 var email = $('#edit-email').val();
-                var password = $('#edit-password').val();
 
                 $.ajax({
                     url: 'update_teacher.php',
@@ -255,20 +242,7 @@ if (isset($_SESSION['user_type'])) {
                 });
             });
 
-            // Function to reveal/hide password
-            $('#teachersTable tbody').on('click', '.reveal-password', function() {
-                var password = $(this).data('password');
-                var passwordText = $(this).siblings('.password-text');
-                var buttonText = $(this);
 
-                if (passwordText.text() === '********') {
-                    passwordText.text(password);
-                    buttonText.text('Hide');
-                } else {
-                    passwordText.text('********');
-                    buttonText.text('Reveal');
-                }
-            });
         });
     </script>
 
