@@ -1,92 +1,77 @@
 <?php
+session_start();
+
 // Include the Internship class and database configuration
 require_once 'Internship.php';
 
 // Create an instance of the Internship class
 $internship = new Internship($pdo);
 
-// Check if there is a POST request to delete an internship
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] == 'delete') {
-    $internship_id = $_POST['id'];
-    $success = $internship->delete($internship_id);
-
-    // Send a JSON response back to the AJAX call
-    header('Content-Type: application/json');
-    echo json_encode(['success' => $success]);
-    exit;
-}
-
-//Create
-
+// Check if there is a POST request
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // We assume that the data from the form has already been checked and cleared of possible injections
+    error_log('Post Data: ' . print_r($_POST, true));
+    // Switch between actions
+    switch ($_POST['action']) {
+        case 'delete':
+            $internship_id = $_POST['id'];
+            $success = $internship->delete($internship_id);
+            echo json_encode(['success' => $success]);
+            break;
+        
+        case 'update':
+            $internshipId = $_POST['id'];
+            $companyData = [
+                'companyName' => $_POST['companyName'],
+                'address' => $_POST['address']
+            ];
+            $contactData = [
+                'contactFirstName' => $_POST['contactFirstName'],
+                'contactLastName' => $_POST['contactLastName'],
+                'contactEmail' => $_POST['contactEmail'],
+                'contactPhone' => $_POST['contactPhone']
+            ];
 
-    $companyName = $_POST['companyName'];
-    $address = $_POST['address'];
-    $contactFirstName = $_POST['contactFirstName'];
-    $contactLastName = $_POST['contactLastName'];
-    $contactEmail = $_POST['contactEmail'];
-    $contactPhone = $_POST['contactPhone'];
+            $updateCompanySuccess = $internship->updateCompany($internshipId, $companyData);
+            $updateContactSuccess = $internship->updateContactPerson($internshipId, $contactData);
 
-    // Call a method to create a record in the database
-    $result = $internship->create([
-        'companyName' => $companyName,
-        'address' => $address,
-        'contactFirstName' => $contactFirstName,
-        'contactLastName' => $contactLastName,
-        'contactEmail' => $contactEmail,
-        'contactPhone' => $contactPhone,
+            echo json_encode([
+                'success' => $updateCompanySuccess && $updateContactSuccess
+            ]);
+            break;
+        
+        case 'create':
+            $companyName = $_POST['companyName'];
+            $address = $_POST['address'];
+            $contactFirstName = $_POST['contactFirstName'];
+            $contactLastName = $_POST['contactLastName'];
+            $contactEmail = $_POST['contactEmail'];
+            $contactPhone = $_POST['contactPhone'];
 
-    ]);
+            $result = $internship->create([
+                'companyName' => $companyName,
+                'address' => $address,
+                'contactFirstName' => $contactFirstName,
+                'contactLastName' => $contactLastName,
+                'contactEmail' => $contactEmail,
+                'contactPhone' => $contactPhone
+            ]);
 
-    header('Content-Type: application/json');
-    echo json_encode(['success' => $result]);
+            echo json_encode(['success' => $result]);
+            break;
+        
+        default:
+            // Action not recognized
+            echo json_encode(['success' => false, 'error' => 'Invalid action']);
+            break;
+    }
     exit;
 }
-
-//Update
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] == 'update') {
-    $companyId = $_POST['companyId'];
-    $companyData = [
-        'companyName' => $_POST['companyName'],
-        'address' => $_POST['address']
-    ];
-    $contactData = [
-        'contactFirstName' => $_POST['contactFirstName'],
-        'contactLastName' => $_POST['contactLastName'],
-        'contactEmail' => $_POST['contactEmail'],
-        'contactPhone' => $_POST['contactPhone']
-    ];
-
-    $updateCompanySuccess = $internship->updateCompany($companyId, $companyData);
-    $updateContactSuccess = $internship->updateContactPerson($companyId, $contactData);
-
-    // Optionally update internships table if needed
-    // $newContactId = {determined somehow};
-    // $updateInternshipSuccess = $internship->updateInternshipContact($companyId, $newContactId);
-
-    header('Content-Type: application/json');
-    echo json_encode([
-        'success' => $updateCompanySuccess && $updateContactSuccess,
-        'companyUpdated' => $updateCompanySuccess,
-        'contactUpdated' => $updateContactSuccess
-        // 'internshipUpdated' => $updateInternshipSuccess // Uncomment if updating internships
-    ]);
-    exit;
-}
-
 
 // Get the list of all internships for display
 $internships = $internship->read();
-?>
 
-<?php
-session_start();
-
-// Check if the user is logged in and has a user type set in the session
+// Include the navbar based on the user type
 if (isset($_SESSION['user_type'])) {
-    // Include the navbar based on the user type
     if ($_SESSION['user_type'] === 'admins') {
         include('../includes/navbar_admin.php');
     } elseif ($_SESSION['user_type'] === 'teachers') {
@@ -134,16 +119,14 @@ if (isset($_SESSION['user_type'])) {
             <tbody>
                 <?php foreach ($internships as $i) : ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($i['name']); // Change to display company name 
-                            ?></td>
-                        <td><?php echo htmlspecialchars($i['address']); ?></td>
-                        <td><?php echo htmlspecialchars($i['contact_name']); // Change to display contact person name 
-                            ?></td>
-                        <td><?php echo htmlspecialchars($i['contact_phone']); ?></td>
-                        <td><?php echo htmlspecialchars($i['contact_email']); ?></td>
+                        <td><?= htmlspecialchars($i['company_name']) ?></td>
+                        <td><?= htmlspecialchars($i['company_address']) ?></td>
+                        <td><?= htmlspecialchars($i['contact_name']) ?></td>
+                        <td><?= htmlspecialchars($i['contact_phone']) ?></td>
+                        <td><?= htmlspecialchars($i['contact_email']) ?></td>
                         <td>
-                            <button class="btn btn-primary btn-sm edit-button" data-id="<?php echo htmlspecialchars($i['id']); ?>"><i class="bi bi-pencil-square"></i></button>
-                            <button class="btn btn-danger btn-sm delete-button" data-id="<?php echo htmlspecialchars($i['id']); ?>"><i class="bi bi-trash3"></i></button>
+                            <button class="btn btn-primary btn-sm edit-button" data-id="<?= htmlspecialchars($i['internship_id']) ?>"><i class="bi bi-pencil-square"></i></button>
+                            <button class="btn btn-danger btn-sm delete-button" data-id="<?= htmlspecialchars($i['internship_id']) ?>"><i class="bi bi-trash3"></i></button>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -193,8 +176,6 @@ if (isset($_SESSION['user_type'])) {
             </div>
         </div>
     </div>
-
-
     <!-- Modal for Creating Internship -->
     <div class="modal fade" id="createInternshipModal" tabindex="-1" aria-labelledby="createInternshipModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -205,6 +186,7 @@ if (isset($_SESSION['user_type'])) {
                 </div>
                 <div class="modal-body">
                     <form id="createInternshipForm">
+                        <input type="hidden" name="action" value="create">  <!-- Добавлено скрытое поле для action -->
                         <div class="mb-3">
                             <label for="companyName" class="form-label">Bedrijfsnaam:</label>
                             <input type="text" class="form-control" id="companyName" name="companyName" required>
@@ -235,6 +217,7 @@ if (isset($_SESSION['user_type'])) {
             </div>
         </div>
     </div>
+
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap 5 JS Bundle with Popper -->
@@ -255,7 +238,7 @@ if (isset($_SESSION['user_type'])) {
 
                 if (confirm('Are you sure you want to delete this record?')) {
                     $.ajax({
-                        url: 'http://localhost/Stage2024/internships_page.php',
+                        url: 'http://localhost/Stage2024/internships/internship_page.php',
                         type: 'POST',
                         dataType: 'json', // Expect JSON response
                         data: {
@@ -302,30 +285,32 @@ if (isset($_SESSION['user_type'])) {
                 $('#editInternshipModal').modal('show');
             });
 
-
             /// Form submission handler for editing internships
             $('#editInternshipForm').submit(function(e) {
                 e.preventDefault();
                 var formData = $(this).serialize();
-                var companyId = $(this).find('#editCompanyId').val(); // Assumes there is a field with the company ID in the form
 
                 $.ajax({
-                    url: 'http://localhost/Stage2024/internships/internship_page.php',
+                    url: 'http://localhost/Stage2024/internships/internship_page.php',  // Make sure this is the correct URL
                     type: 'POST',
-                    data: formData + '&action=update', // formData already contains companyId
-                    success: function(data) {
+                    data: formData,
+                    dataType: 'json',  // Make sure 'json' is specified as the data type
+                    success: function(data) {  // 'data' will already be an object, no need to parse JSON
                         if (data.success) {
-                            alert('Internship Updated Successfully!');
+                            alert('Internship updated successfully!');
                             $('#editInternshipModal').modal('hide');
+                            location.reload();  // Reload the page to see updated data
                         } else {
-                            alert('Error updating internship: ' + data.error);
+                            alert('Error updating internship. Please try again.');
                         }
                     },
-                    error: function() {
-                        alert('Error updating internship. Please check the server and network.');
+                    error: function(xhr, status, error) {
+                        alert('An error occurred: ' + error);
                     }
                 });
             });
+
+
 
             // Form submission handler for creating internships
             $('#createInternshipForm').submit(function(e) {
@@ -333,15 +318,21 @@ if (isset($_SESSION['user_type'])) {
                 var formData = $(this).serialize();
 
                 $.ajax({
-                    url: 'http://localhost/Stage2024/internships_page.php',
+                    url: 'http://localhost/Stage2024/internships/internship_page.php',
                     type: 'POST',
                     data: formData,
-                    success: function(data) {
-                        alert('Internship Created Successfully!');
-                        $('#createInternshipModal').modal('hide');
+                    success: function(response) {
+                        var data = JSON.parse(response);
+                        if (data.success) {
+                            alert('Internship created successfully!');
+                            $('#createInternshipModal').modal('hide');
+                            location.reload();  // Перезагрузите страницу, чтобы увидеть новые данные
+                        } else {
+                            alert('Error creating internship. Please try again.');
+                        }
                     },
                     error: function() {
-                        alert('Error creating internship.');
+                        alert('Error creating internship. Please check the server and network.');
                     }
                 });
             });
