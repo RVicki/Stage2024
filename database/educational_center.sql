@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 16, 2024 at 01:46 PM
+-- Generation Time: Apr 19, 2024 at 10:20 AM
 -- Server version: 5.7.24
 -- PHP Version: 8.1.0
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `admins` (
-  `id` int AUTO_INCREMENT PRIMARY KEY,
+  `id` int(11) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `first_name`, `last_name`, `email`, `password`) VALUES
-(1, 'Alex', 'Johnson', 'alex.johnson@example.com', '$2y$10$XwSY8FLL7vCTT4NddNhFR.cdCDcYWqEjjV/GBYUMG9/6OohEBa2QO '),
+(1, 'Alex', 'Johnson', 'alex.johnson@example.com', '$2y$10$XwSY8FLL7vCTT4NddNhFR.cdCDcYWqEjjV/GBYUMG9/6OohEBa2QO'),
 (2, 'Emma', 'Brown', 'emma.brown@example.com', '$2y$10$lKXi36M10zZQ1qCMstPRk.RPxo7n1fEsB0QMAual4eyqlIhx6T/T6');
 
 -- --------------------------------------------------------
@@ -50,7 +50,7 @@ INSERT INTO `admins` (`id`, `first_name`, `last_name`, `email`, `password`) VALU
 --
 
 CREATE TABLE `companies` (
-  `id` int AUTO_INCREMENT PRIMARY KEY,
+  `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `address` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -69,8 +69,7 @@ INSERT INTO `companies` (`id`, `name`, `address`) VALUES
 (7, 'GreenTech Solutions CVBA', 'Rue du Commerce 67, 1000 Bruxelles'),
 (8, 'Codenomic SA', 'Wetstraat 1, 1040 Etterbeek'),
 (9, 'Logiware BVBA', 'Avenue des Arts 3, 1210 Saint-Josse-ten-Noode'),
-(10, 'ThinkBig NV', 'Boulevard du Régent 47, 1000 Bruxelles'),
-(11, 'CloudNetics NV2131', 'Dendermondestraat 44, 2018 Antwerpen');
+(10, 'ThinkBig NV', 'Boulevard du Régent 47, 1000 Bruxelles');
 
 -- --------------------------------------------------------
 
@@ -79,7 +78,7 @@ INSERT INTO `companies` (`id`, `name`, `address`) VALUES
 --
 
 CREATE TABLE `contact_person` (
-  `id` int AUTO_INCREMENT PRIMARY KEY,
+  `id` int(11) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -101,8 +100,7 @@ INSERT INTO `contact_person` (`id`, `first_name`, `last_name`, `email`, `phone`,
 (7, 'Noah', 'Van Dyck', 'noah.vandyck@greentech.be', '0499 76 89 02', 7),
 (8, 'Louise', 'Hermans', 'louise.hermans@codenomic.be', '0487 87 90 12', 8),
 (9, 'Lucas', 'Martens', 'lucas.martens@logiware.be', '0486 98 01 23', 9),
-(10, 'Zoë', 'Jacobs', 'zoe.jacobs@thinkbig.be', '0475 09 12 34', 10),
-(11, 'Emma', 'Claes', 'emma.claes@cloudnetics.be', '0488 65 78 91', 11);
+(10, 'Zoë', 'Jacobs', 'zoe.jacobs@thinkbig.be', '0475 09 12 34', 10);
 
 -- --------------------------------------------------------
 
@@ -111,7 +109,7 @@ INSERT INTO `contact_person` (`id`, `first_name`, `last_name`, `email`, `phone`,
 --
 
 CREATE TABLE `courses` (
-  `id` int AUTO_INCREMENT PRIMARY KEY,
+  `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` text,
   `duration` varchar(50) DEFAULT NULL,
@@ -147,6 +145,95 @@ CREATE TABLE `course_skill` (
   `active` tinyint(1) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `course_skill`
+--
+
+INSERT INTO `course_skill` (`id`, `course_id`, `skill_id`, `active`) VALUES
+(1, 1, 6, 1),
+(2, 1, 3, 1),
+(3, 1, 4, 1),
+(4, 1, 2, 1),
+(5, 1, 8, 1),
+(6, 1, 7, 1),
+(7, 1, 10, 1),
+(8, 2, 7, 1),
+(9, 2, 3, 1),
+(10, 2, 2, 1),
+(11, 2, 4, 1),
+(12, 2, 6, 1),
+(13, 2, 8, 1),
+(14, 2, 10, 1),
+(15, 2, 1, 1),
+(16, 3, 8, 1),
+(17, 3, 6, 1),
+(18, 3, 3, 1),
+(19, 3, 7, 1),
+(20, 3, 4, 1),
+(21, 3, 2, 1),
+(22, 3, 10, 1),
+(23, 3, 1, 1),
+(24, 3, 5, 1),
+(25, 4, 6, 1),
+(26, 4, 3, 1),
+(27, 4, 8, 1),
+(28, 4, 7, 1),
+(29, 4, 4, 1),
+(30, 4, 2, 1),
+(31, 4, 10, 1),
+(32, 4, 1, 1),
+(33, 4, 5, 1),
+(34, 4, 9, 1),
+(35, 5, 7, 1),
+(36, 5, 4, 1),
+(37, 5, 6, 1),
+(38, 5, 3, 1),
+(39, 5, 2, 1),
+(40, 5, 8, 1),
+(41, 5, 10, 1),
+(42, 6, 7, 1),
+(43, 6, 6, 1),
+(44, 6, 3, 1),
+(45, 6, 4, 1),
+(46, 6, 2, 1),
+(47, 6, 8, 1),
+(48, 6, 10, 1),
+(49, 6, 9, 1),
+(50, 7, 9, 1),
+(51, 7, 3, 1),
+(52, 7, 7, 1),
+(53, 7, 6, 1),
+(54, 7, 4, 1),
+(55, 7, 2, 1),
+(56, 7, 8, 1),
+(57, 7, 10, 1),
+(58, 7, 1, 1),
+(59, 8, 10, 1),
+(60, 8, 3, 1),
+(61, 8, 7, 1),
+(62, 8, 6, 1),
+(63, 8, 4, 1),
+(64, 8, 2, 1),
+(65, 8, 8, 1),
+(66, 8, 9, 1),
+(67, 8, 1, 1),
+(68, 8, 5, 1),
+(69, 9, 4, 1),
+(70, 9, 2, 1),
+(71, 9, 7, 1),
+(72, 9, 6, 1),
+(73, 9, 3, 1),
+(74, 9, 8, 1),
+(75, 9, 10, 1),
+(76, 10, 5, 1),
+(77, 10, 2, 1),
+(78, 10, 3, 1),
+(79, 10, 7, 1),
+(80, 10, 6, 1),
+(81, 10, 4, 1),
+(82, 10, 8, 1),
+(83, 10, 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -181,7 +268,7 @@ INSERT INTO `course_teacher` (`course_id`, `teacher_id`) VALUES
 --
 
 CREATE TABLE `internships` (
-  `id` int AUTO_INCREMENT PRIMARY KEY,
+  `id` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
   `contact_person_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -200,8 +287,7 @@ INSERT INTO `internships` (`id`, `company_id`, `contact_person_id`) VALUES
 (7, 7, 7),
 (8, 8, 8),
 (9, 9, 9),
-(10, 10, 10),
-(11, 11, 11);
+(10, 10, 10);
 
 -- --------------------------------------------------------
 
@@ -254,7 +340,7 @@ INSERT INTO `internship_student` (`id`, `internship_id`, `student_id`, `start_da
 --
 
 CREATE TABLE `skills` (
-  `id` int AUTO_INCREMENT PRIMARY KEY,
+  `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `type` enum('soft','hard') NOT NULL,
   `description` text,
@@ -287,8 +373,180 @@ CREATE TABLE `skill_student` (
   `id` int(11) NOT NULL,
   `skill_id` int(11) DEFAULT NULL,
   `student_id` int(11) DEFAULT NULL,
-  `grade` decimal(3,2) DEFAULT NULL
+  `grade` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `skill_student`
+--
+
+INSERT INTO `skill_student` (`id`, `skill_id`, `student_id`, `grade`) VALUES
+(1, 6, 1, 4),
+(2, 3, 1, 10),
+(3, 4, 1, 9),
+(4, 2, 1, 2),
+(5, 8, 1, 4),
+(6, 7, 1, 4),
+(7, 10, 1, 7),
+(8, 6, 2, 5),
+(9, 3, 2, 10),
+(10, 4, 2, 5),
+(11, 2, 2, 4),
+(12, 8, 2, 6),
+(13, 7, 2, 9),
+(14, 10, 2, 4),
+(15, 7, 3, 4),
+(16, 3, 3, 8),
+(17, 2, 3, 6),
+(18, 4, 3, 7),
+(19, 6, 3, 6),
+(20, 8, 3, 8),
+(21, 10, 3, 4),
+(22, 1, 3, 3),
+(23, 7, 4, 5),
+(24, 3, 4, 5),
+(25, 2, 4, 1),
+(26, 4, 4, 6),
+(27, 6, 4, 8),
+(28, 8, 4, 3),
+(29, 10, 4, 8),
+(30, 1, 4, 2),
+(31, 8, 5, 3),
+(32, 6, 5, 10),
+(33, 3, 5, 2),
+(34, 7, 5, 8),
+(35, 4, 5, 2),
+(36, 2, 5, 6),
+(37, 10, 5, 6),
+(38, 1, 5, 10),
+(39, 5, 5, 1),
+(40, 8, 6, 6),
+(41, 6, 6, 5),
+(42, 3, 6, 9),
+(43, 7, 6, 6),
+(44, 4, 6, 6),
+(45, 2, 6, 9),
+(46, 10, 6, 5),
+(47, 1, 6, 1),
+(48, 5, 6, 7),
+(49, 6, 7, 1),
+(50, 3, 7, 3),
+(51, 8, 7, 3),
+(52, 7, 7, 4),
+(53, 4, 7, 2),
+(54, 2, 7, 7),
+(55, 10, 7, 9),
+(56, 1, 7, 5),
+(57, 5, 7, 7),
+(58, 9, 7, 8),
+(59, 6, 8, 8),
+(60, 3, 8, 7),
+(61, 8, 8, 8),
+(62, 7, 8, 1),
+(63, 4, 8, 9),
+(64, 2, 8, 10),
+(65, 10, 8, 4),
+(66, 1, 8, 10),
+(67, 5, 8, 6),
+(68, 9, 8, 1),
+(69, 7, 9, 4),
+(70, 4, 9, 7),
+(71, 6, 9, 4),
+(72, 3, 9, 10),
+(73, 2, 9, 4),
+(74, 8, 9, 2),
+(75, 10, 9, 9),
+(76, 7, 10, 6),
+(77, 4, 10, 3),
+(78, 6, 10, 7),
+(79, 3, 10, 7),
+(80, 2, 10, 1),
+(81, 8, 10, 2),
+(82, 10, 10, 10),
+(83, 7, 11, 3),
+(84, 6, 11, 4),
+(85, 3, 11, 9),
+(86, 4, 11, 5),
+(87, 2, 11, 8),
+(88, 8, 11, 5),
+(89, 10, 11, 10),
+(90, 9, 11, 2),
+(91, 7, 12, 1),
+(92, 6, 12, 9),
+(93, 3, 12, 2),
+(94, 4, 12, 2),
+(95, 2, 12, 3),
+(96, 8, 12, 10),
+(97, 10, 12, 10),
+(98, 9, 12, 10),
+(99, 9, 13, 7),
+(100, 3, 13, 7),
+(101, 7, 13, 4),
+(102, 6, 13, 6),
+(103, 4, 13, 10),
+(104, 2, 13, 9),
+(105, 8, 13, 7),
+(106, 10, 13, 4),
+(107, 1, 13, 2),
+(108, 9, 14, 6),
+(109, 3, 14, 6),
+(110, 7, 14, 9),
+(111, 6, 14, 6),
+(112, 4, 14, 2),
+(113, 2, 14, 1),
+(114, 8, 14, 10),
+(115, 10, 14, 5),
+(116, 1, 14, 6),
+(117, 10, 15, 4),
+(118, 3, 15, 3),
+(119, 7, 15, 1),
+(120, 6, 15, 6),
+(121, 4, 15, 5),
+(122, 2, 15, 9),
+(123, 8, 15, 7),
+(124, 9, 15, 8),
+(125, 1, 15, 8),
+(126, 5, 15, 6),
+(127, 10, 16, 5),
+(128, 3, 16, 5),
+(129, 7, 16, 1),
+(130, 6, 16, 10),
+(131, 4, 16, 8),
+(132, 2, 16, 8),
+(133, 8, 16, 3),
+(134, 9, 16, 4),
+(135, 1, 16, 1),
+(136, 5, 16, 2),
+(137, 4, 17, 7),
+(138, 2, 17, 10),
+(139, 7, 17, 6),
+(140, 6, 17, 10),
+(141, 3, 17, 3),
+(142, 8, 17, 2),
+(143, 10, 17, 3),
+(144, 4, 18, 6),
+(145, 2, 18, 1),
+(146, 7, 18, 5),
+(147, 6, 18, 5),
+(148, 3, 18, 8),
+(149, 8, 18, 2),
+(150, 10, 18, 9),
+(151, 5, 19, 6),
+(152, 2, 19, 3),
+(153, 3, 19, 6),
+(154, 7, 19, 9),
+(155, 6, 19, 8),
+(156, 4, 19, 3),
+(157, 8, 19, 8),
+(158, 1, 19, 4),
+(159, 5, 20, 3),
+(160, 2, 20, 2),
+(161, 3, 20, 10),
+(162, 7, 20, 6),
+(163, 6, 20, 8),
+(164, 4, 20, 2),
+(165, 8, 20, 6),
+(166, 1, 20, 1);
 
 -- --------------------------------------------------------
 
@@ -297,7 +555,7 @@ CREATE TABLE `skill_student` (
 --
 
 CREATE TABLE `students` (
-  `id` int AUTO_INCREMENT PRIMARY KEY,
+  `id` int(11) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -375,7 +633,7 @@ INSERT INTO `student_course` (`student_id`, `course_id`) VALUES
 --
 
 CREATE TABLE `teachers` (
-  `id` int AUTO_INCREMENT PRIMARY KEY,
+  `id` int(11) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -422,15 +680,6 @@ ALTER TABLE `contact_person`
 --
 ALTER TABLE `courses`
   ADD PRIMARY KEY (`id`);
-  MODIFY course_id INT AUTO_INCREMENT PRIMARY KEY;
-
---
--- Indexes for table `course_skill`
---
-ALTER TABLE `course_skill`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `course_id` (`course_id`),
-  ADD KEY `skill_id` (`skill_id`);
 
 --
 -- Indexes for table `course_skill`
@@ -524,19 +773,13 @@ ALTER TABLE `contact_person`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;  
-
---
--- AUTO_INCREMENT for table `courses`
---
-ALTER TABLE `courses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `course_skill`
 --
 ALTER TABLE `course_skill`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `internships`
@@ -560,7 +803,7 @@ ALTER TABLE `skills`
 -- AUTO_INCREMENT for table `skill_student`
 --
 ALTER TABLE `skill_student`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=256;
 
 --
 -- AUTO_INCREMENT for table `students`
