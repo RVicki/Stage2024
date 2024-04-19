@@ -8,9 +8,15 @@
     <title>Stageformulier Bewerken</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Arial', sans-serif; }
-        .container { margin-top: 20px; }
-        .mb-3, .btn { margin-top: 10px; }
+        .top {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: red;
+            color: white;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -100,6 +106,14 @@
     ?>
 
     <div class="container">
+        <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar bg-body-tertiary">
+                        <button class="btn btn-outline-danger"><a href="student.php" class="nav-link">Terug</a></button>
+                        <button class="btn btn-outline-danger" id="export-student-btn" onclick="exportStudent()">export</button>
+                    </nav>
+                </div>
+            </div>
         <form method="post" action="update_data.php">
             <div class="mb-3">
                 <p><?php echo htmlspecialchars($response['contact_person_first_name'] . ' ' . $response['contact_person_last_name']); ?></p>
