@@ -33,7 +33,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'teachers') {
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse justify-content-end id=" navbarNav">
+            <div class="collapse navbar-collapse justify-content-end" id=" navbarNav">
                 <ul class="navbar-nav ms-auto secondnav">
                     <li class="nav-item">
                         <a class="nav-link" href="account/accountindex.php">Account</a>
